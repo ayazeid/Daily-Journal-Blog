@@ -1,0 +1,52 @@
+<style media="screen">
+  body{position: relative;}
+</style>
+<%- include("partials/header");-%>
+
+
+
+
+<div class="box" id="heading">
+  <div class="dropdown">
+    <button type="button" class="btn btn-outline-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <h2 style="color: white;"> <%= listTitle %> </h2>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+     <% allList.forEach(function(foundedList){ %>
+            <a class="dropdown-item" href="/todolist/<%=foundedList.name%>">
+              <%= foundedList.name%>
+            </a>
+      <% }); %>
+
+      <div>
+               <form  action="/todolist" method="post">
+                 <input type="text" name="newList" placeholder="Add new list" autocomplete="off">
+
+                 <button type="submit" class="submitbtn btn btn-outline-info btn-sm" name="addList"> + </button>
+               </form>
+       </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="box">
+  <% newListItems.forEach(function(foundItem){ %>
+  <form action="/delete" method="post">
+
+    <div class="item">
+      <input type="checkbox" name="checkbox" value="<%=foundItem._id%>" onChange="this.form.submit()">
+      <p class="plist"><%= foundItem.name %></p>
+    </div>
+    <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+  </form>
+  <% }); %>
+
+  <form class="" action="/todolist" method="post">
+    <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+    <button class="submitbtn btn btn-outline-info btn-sm"type="submit" name="list" value=<%= listTitle%>> + </button>
+  </form>
+</div>
+
+<%- include("partials/footer");-%>
