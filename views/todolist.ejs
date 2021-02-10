@@ -12,7 +12,9 @@
     <h2 style="color: white;"> <%= listTitle %> </h2>
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
+      <a class="dropdown-item" href="/todolist">
+        Today
+      </a>
      <% allList.forEach(function(foundedList){ %>
             <a class="dropdown-item" href="/todolist/<%=foundedList.name%>">
               <%= foundedList.name%>

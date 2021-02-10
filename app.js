@@ -125,9 +125,9 @@ app.get("/todolist", function(req, res) {
 
         res.redirect("/todolist");
       } else {
-        let day = date.getDate();
+
         res.render("todolist", {
-          listTitle: day,
+          listTitle: "Today",
           newListItems: foundItems,
           allList:foundedLists
         });
@@ -177,12 +177,9 @@ app.post("/todolist", function(req, res) {
   const listName = req.body.list;
   const addedList=req.body.newList;
 
-  const list = new List({
+  const newlist = new List({
     name: addedList,
     items: defaultItems
-  });
-  list.save(function(err){
-    if(!err){res.redirect("/todolist"+addedList);}
   });
 
   const item = new Item({
@@ -191,12 +188,14 @@ app.post("/todolist", function(req, res) {
 
 if(listName === "Today"){
   item.save();
+  newlist.save();
   List.findOneAndUpdate({name: "Today"}, function(err, foundList){
     foundList.items.push(item);
     foundList.save();
   });
   res.redirect("/todolist");
 }else {
+  newlist.save();
 List.findOne({name: listName}, function(err, foundList){
     foundList.items.push(item);
     foundList.save();
